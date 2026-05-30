@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+
+        body{
+            background: linear-gradient(135deg,#1e293b,#0f172a);
+            min-height:100vh;
+        }
+
+        .hero{
+            color:white;
+            text-align:center;
+            padding:50px;
+        }
+
+        .card-box{
+            border-radius:20px;
+            transition:0.3s;
+        }
+
+        .card-box:hover{
+            transform:translateY(-10px);
+        }
+
+        .icon{
+            font-size:60px;
+        }
+
+        .assessment-table{
+            border-radius:20px;
+            overflow:hidden;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark bg-black">
+
+    <div class="container-fluid">
+
+        <span class="navbar-brand">
+            👨‍💼 Admin Dashboard
+        </span>
+
+        <a href="/" class="btn btn-danger">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+<div class="container">
+
+    <div class="hero">
+
+        <h1>Welcome Admin 👋</h1>
+
+        <p>
+            Manage assessments, students and AI generated quizzes.
+        </p>
+
+    </div>
+
+    <!-- Dashboard Cards -->
+
+    <div class="row">
+
+        <!-- Create Assessment -->
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card card-box shadow p-4">
+
+                <div class="text-center">
+
+                    <div class="icon">📝</div>
+
+                    <h3>Create Assessment</h3>
+
+                    <p>Create assessments for students.</p>
+
+                    <a href="/create_assessment"
+                       class="btn btn-primary">
+                        Open
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- AI Generator -->
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card card-box shadow p-4">
+
+                <div class="text-center">
+
+                    <div class="icon">🤖</div>
+
+                    <h3>AI Generator</h3>
+
+                    <p>Generate questions using Gemini AI.</p>
+
+                    <a href="/generate_quiz"
+                       class="btn btn-success">
+                        Open
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Results -->
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card card-box shadow p-4">
+
+                <div class="text-center">
+
+                    <div class="icon">📊</div>
+
+                    <h3>Results</h3>
+
+                    <p>View student performance.</p>
+
+                    <a href="/results"
+                       class="btn btn-warning">
+                        Open
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Assessment Table -->
+
+    <div class="card shadow-lg assessment-table mt-4">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3 class="mb-0">
+                📚 Created Assessments
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-striped table-hover">
+
+                <thead class="table-dark">
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Code</th>
+                        <th>Topic</th>
+                        <th>Difficulty</th>
+                        <th>Questions</th>
+                        <th>Duration</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for assessment in assessments %}
+
+                    <tr>
+
+                        <td>{{ assessment[0] }}</td>
+
+                        <td>{{ assessment[1] }}</td>
+
+                        <td>
+                            {{ assessment[2] }}
+
+                            <span
+                            id="code{{ assessment[0] }}"
+                            class="d-none">
+
+                            {{ assessment[2] }}
+
+                            </span>
+                        </td>
+
+                        <td>{{ assessment[3] }}</td>
+
+                        <td>{{ assessment[4] }}</td>
+
+                        <td>{{ assessment[5] }}</td>
+
+                        <td>{{ assessment[6] }} min</td>
+
+                        <td>
+
+                            <div class="d-flex gap-2">
+
+                                <button
+                                onclick="copyCode('code{{ assessment[0] }}')"
+                                class="btn btn-secondary btn-sm">
+
+                                📋
+
+                                </button>
+
+                                <a
+                                href="/view_questions/{{ assessment[2] }}"
+                                class="btn btn-info btn-sm">
+
+                                👁
+
+                                </a>
+
+                                <a
+                                href="/delete_assessment/{{ assessment[0] }}"
+                                class="btn btn-danger btn-sm">
+
+                                🗑
+
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function copyCode(id){
+
+    let text =
+    document.getElementById(id).innerText;
+
+    navigator.clipboard.writeText(text);
+
+    alert("Assessment Code Copied Successfully ✅");
+
+}
+
+</script>
+
+</body>
+</html>

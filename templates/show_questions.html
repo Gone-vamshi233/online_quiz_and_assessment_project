@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generated Questions</title>
+</head>
+<body>
+
+<h2>Generated Questions</h2>
+
+{% for q in questions %}
+
+<div>
+
+    <h3>{{ q.question }}</h3>
+
+    <p>A. {{ q.option_a }}</p>
+
+    <p>B. {{ q.option_b }}</p>
+
+    <p>C. {{ q.option_c }}</p>
+
+    <p>D. {{ q.option_d }}</p>
+
+    <p>
+        <b>Answer:</b>
+        {{ q.answer }}
+    </p>
+
+    <hr>
+
+</div>
+
+{% endfor %}
+
+</body>
+</html>
